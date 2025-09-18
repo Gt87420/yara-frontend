@@ -7,7 +7,9 @@ import GoogleLoginScreen from "../screens/auth/GoogleLoginScreen";
 import AgricultureCard from "../screens/start/AgricultureCard";
 import HomeScreen from "../screens/home/HomeScreen";
 import ParcelasScreen from "../screens/parcelas/ParcelasScreen";
+import DetallesParcelaScreen from "../screens/parcelas/DetallesParcelaScreen";
 import CrearParcelaScreen from "../screens/parcelas/CrearParcelaScreen";
+import ClimaScreen from "../screens/parcelas/ClimaScreen" 
 import TestIcon from "../screens/start/TestIcon";
 import { RootStackParamList } from "./types";
 import Toast from "react-native-toast-message"; // 👈 Importa Toast
@@ -37,6 +39,8 @@ export default function App() {
         <Stack.Screen name="Home" component={HomeScreen} options={{ title: "Inicio" }} />
         <Stack.Screen name="Parcelas" component={ParcelasScreen} />
         <Stack.Screen name="CrearParcela" component={CrearParcelaScreen} />
+        <Stack.Screen name="DetallesParcelaScreen" component={DetallesParcelaScreen} />
+        <Stack.Screen name="Clima" component={ClimaScreen} />
       </Stack.Navigator>
 
       {/* 👇 Esto debe estar al final del contenedor */}
