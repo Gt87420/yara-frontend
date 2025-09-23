@@ -13,6 +13,11 @@ import ClimaScreen from "../screens/parcelas/ClimaScreen"
 import TestIcon from "../screens/start/TestIcon";
 import { RootStackParamList } from "./types";
 import Toast from "react-native-toast-message"; // 👈 Importa Toast
+import CultivosScreen from "../screens/cultivos/CultivosScreen";
+import CrearCultivoScreen from "../screens/cultivos/CrearCultivoScreen";
+import EditarCultivoScreen from "../screens/cultivos/EditarCultivoScreen";
+import DetallesCultivoScreen from "../screens/cultivos/DetallesCultivoScreen";
+
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -41,6 +46,11 @@ export default function App() {
         <Stack.Screen name="CrearParcela" component={CrearParcelaScreen} />
         <Stack.Screen name="DetallesParcelaScreen" component={DetallesParcelaScreen} />
         <Stack.Screen name="Clima" component={ClimaScreen} />
+
+        <Stack.Screen name="Cultivos" component={CultivosScreen} />
+        <Stack.Screen name="CrearCultivo" component={CrearCultivoScreen} />
+        <Stack.Screen name="EditarCultivo" component={EditarCultivoScreen} />
+        <Stack.Screen name="DetallesCultivo" component={DetallesCultivoScreen} />
       </Stack.Navigator>
 
       {/* 👇 Esto debe estar al final del contenedor */}

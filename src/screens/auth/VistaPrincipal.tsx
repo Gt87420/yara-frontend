@@ -5,6 +5,7 @@ import {
   ImageBackground,
   StyleSheet,
   Dimensions,
+  Image,
 } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "../../navigation/types";
@@ -22,13 +23,17 @@ export default function VistaPrincipal({ navigation }: Props) {
       resizeMode="cover"
     >
       <LinearGradient
-        colors={["rgba(21, 128, 61, 0.8)", "rgba(0, 0, 0, 0.6)"]}
+        colors={["rgba(23, 87, 46, 0.8)", "rgba(0, 0, 0, 0.6)"]}
         style={styles.overlay}
       >
         <View style={styles.container}>
           {/* Header Section */}
           <View style={styles.header}>
-            <Text style={styles.logo}>YARA</Text>
+            <Image
+              source={require("../../../assets/img/LOGOYARABLANCO.png")}
+              style={styles.logo}
+              resizeMode="contain"
+            />
             <Text style={styles.tagline}>
               Innovando la Agricultura para un Futuro Sostenible
             </Text>
@@ -116,14 +121,8 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   logo: {
-    fontSize: 48,
-    fontWeight: "900", // sigue funcionando como fallback
-    fontFamily: "Poppins_900Black",
-    color: "#ffffff",
-    letterSpacing: 4,
-    textShadowColor: "rgba(0, 0, 0, 0.3)",
-    textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 4,
+    width: 150,
+    height: 75,
   },
   tagline: {
     fontSize: 14,
@@ -169,7 +168,7 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   primaryButton: {
-    backgroundColor: "#84cc16",
+    backgroundColor: "#4BAE4F",
     paddingVertical: 16,
     paddingHorizontal: 32,
     borderRadius: 12,
@@ -181,7 +180,7 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   primaryButtonText: {
-    color: "#374151",
+    color: "#ffffff",
     fontSize: 18,
     fontWeight: "700",
     fontFamily: "Poppins_700Bold", // ✅ solo aquí

@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Image,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
@@ -110,11 +111,13 @@ export default function Login({ route, navigation }: Props) {
       >
         {/* Encabezado */}
         <View style={styles.header}>
-          <View style={styles.logoContainer}>
-            <Text style={[styles.logoText, { fontFamily: "Poppins-Bold" }]}>
-              YARA
-            </Text>
-            <View style={styles.logoDot} />
+          <View>
+            <Image
+              source={require("../../../assets/img/YARALOGO.png")}
+              style={styles.logo}
+              resizeMode="contain"
+            />
+            <View />
           </View>
           <Text style={[styles.welcomeText, { fontFamily: "Poppins-Bold" }]}>
             Bienvenido de vuelta
@@ -219,18 +222,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 16,
   },
-  logoText: {
-    fontSize: 32,
-    fontWeight: "bold",
-    color: "#15803d",
-    letterSpacing: 2,
-  },
-  logoDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: "#84cc16",
-    marginLeft: 4,
+  logo: {
+    width: 100, // ocupa la mayor parte del contenedor
+    height: 100,
+    resizeMode: "contain",
   },
   welcomeText: {
     fontSize: 28,
@@ -282,9 +277,9 @@ const styles = StyleSheet.create({
   },
   eyeButton: { paddingHorizontal: 12 },
   forgotPassword: { alignSelf: "flex-end", marginBottom: 24 },
-  forgotPasswordText: { color: "#15803d", fontSize: 14 },
+  forgotPasswordText: { color: "#1E5631", fontSize: 14 },
   primaryButton: {
-    backgroundColor: "#15803d",
+    backgroundColor: "#4BAE4F",
     borderRadius: 12,
     paddingVertical: 16,
     alignItems: "center",
@@ -293,5 +288,5 @@ const styles = StyleSheet.create({
   primaryButtonText: { color: "#fff", fontSize: 16 },
   footer: { flexDirection: "row", justifyContent: "center", marginTop: 24 },
   footerText: { color: "#9ca3af", fontSize: 14 },
-  footerLink: { color: "#15803d", fontSize: 14, marginLeft: 4 },
+  footerLink: { color: "#1E5631", fontSize: 14, marginLeft: 4 },
 });

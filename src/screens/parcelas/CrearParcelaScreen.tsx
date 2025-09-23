@@ -25,9 +25,10 @@ import { Ionicons } from "@expo/vector-icons"
 import { LinearGradient } from "expo-linear-gradient"
 import { BlurView } from "expo-blur"
 
-import ParcelStatsModal from "../../components/ParcelStatsModal"
-import TutorialOverlay from "../../components/TutorialOverlay"
-import LoadingOverlay from "../../components/LoadingOverlay"
+import ParcelStatsModal from "../../components/Parcelas/ParcelStatsModal"
+import TutorialOverlay from "../../components/Parcelas/TutorialOverlay"
+import LoadingOverlay from "../../components/Parcelas/LoadingOverlay"
+import BottomNavBar from "../../components/BottomNavBar";
 
 type Props = NativeStackScreenProps<RootStackParamList, "CrearParcela">
 

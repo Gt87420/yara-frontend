@@ -3,8 +3,9 @@ import AppNavigation from "./src/navigation";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { View } from "react-native";
+import FlashMessage from "react-native-flash-message"; // 👈 importamos
 
-SplashScreen.preventAutoHideAsync(); // 👈 evita que desaparezca antes de tiempo
+SplashScreen.preventAutoHideAsync(); // evita que desaparezca antes de tiempo
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -16,15 +17,18 @@ export default function App() {
 
   React.useEffect(() => {
     if (fontsLoaded) {
-      SplashScreen.hideAsync(); // 👈 ocultamos el splash cuando cargan las fuentes
+      SplashScreen.hideAsync(); // ocultamos el splash cuando cargan las fuentes
     }
   }, [fontsLoaded]);
 
   if (!fontsLoaded) {
-    return <View />; // 👈 devuelve algo vacío mientras carga
+    return <View />; // devuelve algo vacío mientras carga
   }
 
-  return <AppNavigation />;
+  return (
+    <>
+      <AppNavigation />
+      <FlashMessage position="top" /> {/* 👈 agregamos el flash message */}
+    </>
+  );
 }
-
-

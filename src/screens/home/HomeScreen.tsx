@@ -1,88 +1,57 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import Toast from "react-native-toast-message";
-import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import type { RootStackParamList } from "../../navigation/types";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback, useState } from "react";
+import BottomNavBar from "../../components/BottomNavBar";
+import { CultivoService } from "../../api/cultivoService";
 
-type Props = NativeStackScreenProps<RootStackParamList, "Home">;
+export default function HomeScreen() {
+  const [cultivos, setCultivos] = useState<any[]>([]);
 
-export default function HomeScreen({ navigation }: Props) {
-  const handleLogout = async () => {
+  const cargarCultivos = async () => {
     try {
-      await signOut(auth);
-      Toast.show({
-        type: "success",
-        text1: "👋 Sesión cerrada",
-        text2: "Vuelve pronto a YARA 🌱",
-        position: "bottom",
-      });
-      navigation.replace("Login", { google: false });
-    } catch (error: any) {
-      console.error("❌ Error al cerrar sesión:", error);
-      Toast.show({
-        type: "error",
-        text1: "Error",
-        text2: "No se pudo cerrar sesión",
-        position: "bottom",
-      });
+      const data = await CultivoService.obtenerTodosUsuario();
+      setCultivos(data);
+    } catch (err) {
+      console.error("❌ Error cargando cultivos:", err);
     }
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      cargarCultivos();
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>🏡 Bienvenido a YARA</Text>
-      <Text style={styles.subtitle}>Tu panel principal de agricultura 🚀</Text>
+      <Text style={styles.subtitle}>Tus cultivos recientes 🌱</Text>
 
-      {/* 📌 Ir a Cultivos */}
-      <TouchableOpacity style={styles.card} activeOpacity={0.7}>
-        <Ionicons name="leaf" size={28} color="#15803d" />
-        <Text style={styles.cardText}>Mis cultivos</Text>
-      </TouchableOpacity>
+      <FlatList
+        data={cultivos}
+        keyExtractor={(item) => item._id}
+        renderItem={({ item }) => (
+          <View style={styles.card}>
+            <Text style={styles.name}>{item.cultivo}</Text>
+            <Text style={styles.detail}>Etapa: {item.etapa}</Text>
+          </View>
+        )}
+        ListEmptyComponent={
+          <Text style={styles.empty}>No tienes cultivos todavía</Text>
+        }
+      />
 
-      {/* 📌 Ir a Estadísticas */}
-      <TouchableOpacity style={styles.card} activeOpacity={0.7}>
-        <Ionicons name="analytics" size={28} color="#2563eb" />
-        <Text style={styles.cardText}>Estadísticas</Text>
-      </TouchableOpacity>
-
-      {/* 📌 Ir a Configuración */}
-      <TouchableOpacity style={styles.card} activeOpacity={0.7}>
-        <Ionicons name="settings" size={28} color="#6b7280" />
-        <Text style={styles.cardText}>Configuración</Text>
-      </TouchableOpacity>
-
-      {/* 📌 Ir a Parcelas */}
-      <TouchableOpacity
-        style={styles.card}
-        activeOpacity={0.7}
-        onPress={() => navigation.navigate("Parcelas")}
-      >
-        <Ionicons name="map" size={28} color="#0ea5e9" />
-        <Text style={styles.cardText}>Mis Parcelas</Text>
-      </TouchableOpacity>
-
-      {/* 🚪 Botón de cerrar sesión */}
-      <TouchableOpacity
-        onPress={handleLogout}
-        style={styles.logoutButton}
-        activeOpacity={0.7}
-      >
-        <Ionicons name="log-out-outline" size={28} color="#dc2626" />
-        <Text style={styles.logoutText}>Cerrar sesión</Text>
-      </TouchableOpacity>
+      {/* Barra de navegación */}
+      <BottomNavBar />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f0fdf4",
-    padding: 20,
-    justifyContent: "center",
-  },
+  container: { flex: 1, backgroundColor: "#f0fdf4", padding: 20 },
   title: {
     fontSize: 28,
     fontWeight: "bold",
@@ -94,43 +63,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#6b7280",
     textAlign: "center",
-    marginBottom: 30,
+    marginBottom: 20,
   },
   card: {
-    flexDirection: "row",
-    alignItems: "center",
     backgroundColor: "#fff",
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 16,
-    elevation: 3,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-  },
-  cardText: {
-    fontSize: 18,
-    marginLeft: 12,
-    color: "#374151",
-  },
-  logoutButton: {
-    flexDirection: "row",
-    alignItems: "center",
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 10,
     borderWidth: 1,
-    borderColor: "#dc2626",
-    backgroundColor: "#fee2e2",
-    padding: 16,
-    borderRadius: 12,
-    marginTop: 30,
-    elevation: 3,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
+    borderColor: "#e5e7eb",
   },
-  logoutText: {
-    fontSize: 18,
-    marginLeft: 12,
-    color: "#dc2626",
-    fontWeight: "600",
-  },
+  name: { fontSize: 18, fontWeight: "600", color: "#374151" },
+  detail: { fontSize: 14, color: "#6b7280" },
+  empty: { textAlign: "center", color: "#9ca3af", marginTop: 20 },
 });

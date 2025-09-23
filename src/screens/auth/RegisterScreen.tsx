@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Platform,
+  Image,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -171,7 +172,11 @@ export default function Registro({ navigation }: Props) {
     >
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.logo}>YARA</Text>
+        <Image
+          source={require("../../../assets/img/YARALOGO.png")}
+          style={styles.logo}
+          resizeMode="contain"
+        />
         <Text style={styles.subtitle}>
           Únete a la Nueva Era de la Agricultura
         </Text>
@@ -413,8 +418,13 @@ export default function Registro({ navigation }: Props) {
 }
 
 const styles = StyleSheet.create({
-  header: { alignItems: "center", marginBottom: 16, marginTop: 40 },
-  logo: { fontSize: 32, fontFamily: "Poppins_700Bold", color: "#15803d" },
+  header: { alignItems: "center", marginBottom: 16, },
+  logo: {
+    marginTop: 40,
+    marginBottom: 10,
+    width: 80,
+    height: 80,
+  },
   subtitle: {
     fontSize: 16,
     fontFamily: "Poppins_400Regular",

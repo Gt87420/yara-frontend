@@ -4,6 +4,7 @@ import {
   ImageBackground,
   StyleSheet,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { LinearGradient } from "expo-linear-gradient";
@@ -22,7 +23,7 @@ export default function YaraCard({ navigation }: Props) {
       >
         <LinearGradient
           colors={[
-            "rgba(7, 31, 17, 0.43)",
+            "rgba(7, 31, 17, 0.8)",
             "rgba(20, 109, 67, 0.47)",
             "rgba(6, 68, 30, 0.03)",
           ]}
@@ -33,10 +34,14 @@ export default function YaraCard({ navigation }: Props) {
         <View style={styles.header}>
           <View style={styles.brandContainer}>
             <View style={styles.logoContainer}>
-              <Text style={styles.logo}>YARA</Text>
+              <Image
+                source={require("../../../assets/img/LOGOYARABLANCO.png")}
+                style={styles.logo}
+                resizeMode="contain"
+              />
             </View>
             <View style={styles.taglineContainer}>
-              <Ionicons name="leaf" color="#f59e0b" size={16} />
+              <Ionicons name="leaf" color="#A7C97B" size={16} />
               <Text style={styles.tagline}>AGRICULTURA REINVENTADA</Text>
             </View>
           </View>
@@ -49,7 +54,6 @@ export default function YaraCard({ navigation }: Props) {
             Tecnología inteligente para el futuro sostenible del campo
           </Text>
         </View>
-
         <View style={styles.metricsContainer}>
           <View style={styles.metricCard}>
             <View style={styles.metricHeader}>
@@ -114,23 +118,17 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     alignSelf: "flex-start",
-    backgroundColor: "rgba(255, 255, 255, 0.95)",
-    paddingHorizontal: 20,
-    paddingVertical: 12,
     borderRadius: 20,
     marginBottom: 12,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    elevation: 4,
+    width: 100, // tamaño fijo más grande
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
   },
   logo: {
-    fontSize: 24,
-    fontWeight: "900",
-    fontFamily: "Poppins_900Black",
-    color: "#15803d",
-    letterSpacing: 2,
+    width: 100, // ocupa la mayor parte del contenedor
+    height: 100,
+    resizeMode: "contain",
   },
   taglineContainer: {
     flexDirection: "row",
@@ -141,7 +139,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "600",
     fontFamily: "Poppins_600SemiBold",
-    color: "#f59e0b",
+    color: "#A7C97B",
     letterSpacing: 1.5,
     textTransform: "uppercase",
   },
@@ -155,7 +153,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   highlight: {
-    color: "#f59e0b",
+    color: "#A7C97B",
     fontWeight: "900",
     fontFamily: "Poppins_900Black",
   },
@@ -220,7 +218,7 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   primaryButton: {
-    backgroundColor: "#15803d",
+    backgroundColor: "#1E5631",
     paddingVertical: 20,
     paddingHorizontal: 32,
     borderRadius: 20,
@@ -249,7 +247,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
   },
   secondaryButtonText: {
-    color: "#15803d",
+    color: "#1E5631",
     fontSize: 16,
     fontWeight: "600",
     fontFamily: "Poppins_600SemiBold",
@@ -263,12 +261,11 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: "rgba(245, 158, 11, 0.6)",
-    shadowColor: "#f59e0b",
+    backgroundColor: "#1E5631",
+    shadowColor: "#1E5631",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 2,
   },
 });
-

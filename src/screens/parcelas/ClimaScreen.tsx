@@ -7,6 +7,7 @@ import { type RouteProp, useRoute } from "@react-navigation/native"
 import type { RootStackParamList } from "../../navigation/types"
 import { auth } from "../../firebase"
 import { LinearGradient } from "expo-linear-gradient"
+import BottomNavBar from "../../components/BottomNavBar";
 
 const { width } = Dimensions.get("window")
 
@@ -259,6 +260,8 @@ export default function ClimaScreen() {
           </View>
         )}
       </ScrollView>
+      {/* Barra de navegación */}
+        <BottomNavBar />
     </LinearGradient>
   )
 }

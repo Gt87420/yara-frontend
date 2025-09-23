@@ -17,6 +17,8 @@ import { auth } from "../../firebase";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "../../navigation/types";
 import { useFocusEffect } from "@react-navigation/native";
+import BottomNavBar from "../../components/BottomNavBar";
+
 
 type Props = NativeStackScreenProps<RootStackParamList, "Parcelas">;
 
@@ -317,6 +319,8 @@ export default function ParcelasScreen({ navigation }: Props) {
           }
         />
       </View>
+      {/* Barra de navegación */}
+        <BottomNavBar />
     </View>
   );
 }

@@ -48,4 +48,11 @@ export type RootStackParamList = {
     CrearParcela: undefined;
     DetallesParcelaScreen: { parcela: any };
     Clima: { parcelaId: string };
+    Cultivos: undefined;
+    CrearCultivo: undefined;
+    EditarCultivo: {
+        id: string;
+        onGoBack?: (cultivoActualizado: any) => void; // <-- agregar aquí
+    };
+    DetallesCultivo: { id: string };
 }
