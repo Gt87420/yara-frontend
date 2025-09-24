@@ -17,6 +17,10 @@ import CultivosScreen from "../screens/cultivos/CultivosScreen";
 import CrearCultivoScreen from "../screens/cultivos/CrearCultivoScreen";
 import EditarCultivoScreen from "../screens/cultivos/EditarCultivoScreen";
 import DetallesCultivoScreen from "../screens/cultivos/DetallesCultivoScreen";
+import InsumosList from "../screens/insumos/InsumosList";
+import InsumoDetail from "../screens/insumos/InsumoDetail";
+import InsumoCreate from "../screens/insumos/InsumoCreate";
+import InsumoEdit from "../screens/insumos/InsumoEdit";
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -51,6 +55,10 @@ export default function App() {
         <Stack.Screen name="CrearCultivo" component={CrearCultivoScreen} />
         <Stack.Screen name="EditarCultivo" component={EditarCultivoScreen} />
         <Stack.Screen name="DetallesCultivo" component={DetallesCultivoScreen} />
+        <Stack.Screen name="Insumos" component={InsumosList} />
+        <Stack.Screen name="InsumoDetail" component={InsumoDetail} />
+        <Stack.Screen name="InsumoCreate" component={InsumoCreate} />
+        <Stack.Screen name="InsumoEdit" component={InsumoEdit} />
       </Stack.Navigator>
 
       {/* 👇 Esto debe estar al final del contenedor */}

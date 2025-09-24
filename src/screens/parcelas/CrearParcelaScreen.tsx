@@ -48,7 +48,6 @@ export default function CrearParcelaScreenComplete({ navigation }: Props) {
   const [saveProgress, setSaveProgress] = useState<number | undefined>()
 
   useEffect(() => {
-    // mostrar tutorial SIEMPRE que se abre
     setShowTutorial(true)
   }, [])
 
@@ -80,7 +79,6 @@ export default function CrearParcelaScreenComplete({ navigation }: Props) {
     StatusBar.setBarStyle("light-content")
   }, [])
 
-  /** 👉 Agregar puntos tocando en el mapa */
   const handleMapPress = (event: MapPressEvent) => {
     const coord = event.nativeEvent.coordinate
     setPolygonCoords((prev) => [...prev, coord])
@@ -115,7 +113,7 @@ export default function CrearParcelaScreenComplete({ navigation }: Props) {
       const j = (i + 1) % pts.length
       area += pts[i].x * pts[j].y - pts[j].x * pts[i].y
     }
-    return Math.abs(area) / 2 / 10000
+    return Math.abs(area) / 2 / 10000 // Hectáreas
   }
 
   const computePerimeter = (coords: LatLng[]) => {
@@ -134,6 +132,15 @@ export default function CrearParcelaScreenComplete({ navigation }: Props) {
       perimeter += 6371000 * c
     }
     return perimeter
+  }
+
+  // 👉 Nueva función para mostrar área
+  const formatAreaForDisplay = (hectareas: number) => {
+    if (hectareas < 0.1) {
+      const m2 = hectareas * 10000
+      return `${m2.toFixed(0)} m²`
+    }
+    return `${hectareas.toFixed(2)} ha`
   }
 
   const handleSave = async () => {
@@ -181,7 +188,7 @@ export default function CrearParcelaScreenComplete({ navigation }: Props) {
         usuarioUid: user.uid,
         nombre: parcelaName.trim(),
         ubicacion: { type: "Polygon", coordinates },
-        areaHectareas,
+        areaHectareas, // Siempre hectáreas al backend
         tipoSuelo: "franco arenoso",
       }
 
@@ -206,7 +213,7 @@ export default function CrearParcelaScreenComplete({ navigation }: Props) {
         Toast.show({
           type: "success",
           text1: "¡Parcela creada exitosamente!",
-          text2: `${parcelaName} - ${areaHectareas.toFixed(2)} ha`,
+          text2: `${parcelaName} - ${formatAreaForDisplay(areaHectareas)}`,
           position: "top",
           topOffset: 100,
         })
@@ -347,7 +354,7 @@ export default function CrearParcelaScreenComplete({ navigation }: Props) {
                   <View style={styles.areaInfo}>
                     <Text style={styles.areaLabel}>Área calculada</Text>
                     <Text style={styles.areaValue}>
-                      {area.toFixed(2)} <Text style={styles.areaUnit}>ha</Text>
+                      {formatAreaForDisplay(area)}
                     </Text>
                   </View>
                   {polygonCoords.length > 0 && (
@@ -388,13 +395,14 @@ export default function CrearParcelaScreenComplete({ navigation }: Props) {
         parcelName={parcelaName}
       />
 
-      {/* Tutorial se abre SIEMPRE */}
+      {/* Tutorial */}
       <TutorialOverlay visible={showTutorial} onClose={() => setShowTutorial(false)} onComplete={() => setShowTutorial(false)} />
 
       <LoadingOverlay visible={isLoading} message={loadingMessage} progress={saveProgress} />
     </SafeAreaView>
   )
 }
+
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#f8fafc" },

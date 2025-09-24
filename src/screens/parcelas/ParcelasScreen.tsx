@@ -19,7 +19,6 @@ import type { RootStackParamList } from "../../navigation/types";
 import { useFocusEffect } from "@react-navigation/native";
 import BottomNavBar from "../../components/BottomNavBar";
 
-
 type Props = NativeStackScreenProps<RootStackParamList, "Parcelas">;
 
 const { height } = Dimensions.get("window");
@@ -37,14 +36,12 @@ export default function ParcelasScreen({ navigation }: Props) {
     }, [])
   );
 
-  // Token
   const getToken = async () => {
     const user = auth.currentUser;
     if (!user) return null;
     return await user.getIdToken();
   };
 
-  // GPS en tiempo real
   useEffect(() => {
     let subscription: Location.LocationSubscription | null = null;
     (async () => {
@@ -67,7 +64,6 @@ export default function ParcelasScreen({ navigation }: Props) {
     };
   }, []);
 
-  // Fetch parcelas
   const fetchParcelas = async () => {
     try {
       const token = await getToken();
@@ -94,7 +90,6 @@ export default function ParcelasScreen({ navigation }: Props) {
     }
   };
 
-  // Eliminar parcela
   const handleDeleteParcela = async (id: string, nombre: string) => {
     Alert.alert(
       "Eliminar Parcela",
@@ -142,6 +137,17 @@ export default function ParcelasScreen({ navigation }: Props) {
     );
   };
 
+  // 🔹 Función para mostrar área en m² o ha según el tamaño
+  const formatArea = (hectareas: number) => {
+    if (!hectareas) return "0 m²";
+    if (hectareas >= 1) {
+      return `${hectareas.toFixed(2)} ha`;
+    } else {
+      const m2 = hectareas * 10000;
+      return `${m2.toFixed(0)} m²`;
+    }
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
@@ -165,7 +171,7 @@ export default function ParcelasScreen({ navigation }: Props) {
         </TouchableOpacity>
       </View>
 
-      {/* 🌍 Mapa */}
+      {/* Mapa */}
       <View style={styles.mapSection}>
         <TouchableOpacity
           style={styles.mapCard}
@@ -226,7 +232,7 @@ export default function ParcelasScreen({ navigation }: Props) {
         </TouchableOpacity>
       </View>
 
-      {/* 📋 Lista de Parcelas */}
+      {/* Lista de Parcelas */}
       <View style={styles.parcelasSection}>
         <Text style={styles.sectionTitle}>Tus Parcelas</Text>
         <FlatList
@@ -242,7 +248,7 @@ export default function ParcelasScreen({ navigation }: Props) {
                   <View style={styles.areaContainer}>
                     <Text style={styles.areaIcon}>🌾</Text>
                     <Text style={styles.parcelaArea}>
-                      {item.areaHectareas} hectáreas
+                      {formatArea(item.areaHectareas)}
                     </Text>
                   </View>
                 </View>
@@ -258,7 +264,6 @@ export default function ParcelasScreen({ navigation }: Props) {
 
               {/* Botones de acción */}
               <View style={styles.actionButtons}>
-                {/* 👉 Ahora solo navega a la vista de clima */}
                 <TouchableOpacity
                   style={[styles.actionButton, styles.weatherActionButton]}
                   onPress={async () => {
@@ -271,21 +276,14 @@ export default function ParcelasScreen({ navigation }: Props) {
                         );
                         return;
                       }
-
-                      // 🔹 Pide el clima de esa parcela
                       const res = await fetch(
                         `https://yara-91kd.onrender.com/parcelas/${item._id}/clima`,
                         {
                           headers: { Authorization: `Bearer ${token}` },
                         }
                       );
-
                       const data = await res.json();
-
-                      // 🔹 Navega y pasa el clima + la parcela
-                      navigation.navigate("Clima", {
-                        parcelaId: item._id, // 👈 solo el id
-                      });
+                      navigation.navigate("Clima", { parcelaId: item._id });
                     } catch (err) {
                       console.error("❌ Error cargando clima", err);
                       Alert.alert("Error", "No se pudo cargar el clima");
@@ -319,8 +317,9 @@ export default function ParcelasScreen({ navigation }: Props) {
           }
         />
       </View>
+
       {/* Barra de navegación */}
-        <BottomNavBar />
+      <BottomNavBar />
     </View>
   );
 }

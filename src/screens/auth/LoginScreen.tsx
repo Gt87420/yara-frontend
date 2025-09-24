@@ -18,7 +18,7 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { auth } from "../../firebase";
-import Toast from "react-native-toast-message"; // ✅ Toast para notificaciones
+import { showMessage } from "react-native-flash-message";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Login">;
 
@@ -39,11 +39,17 @@ export default function Login({ route, navigation }: Props) {
 
   const handleLogin = async () => {
     if (!email || !password) {
-      Toast.show({
-        type: "error",
-        text1: "Campos incompletos",
-        text2: "⚠️ Por favor completa todos los campos.",
-        position: "bottom",
+      showMessage({
+        message: "Campos incompletos",
+        description: "⚠️ Por favor completa todos los campos.",
+        type: "warning",
+        icon: "warning",
+        backgroundColor: "#FFB800",
+        color: "#fff",
+        duration: 3000,
+        floating: true,
+        style: { borderRadius: 10, marginHorizontal: 16, padding: 10 },
+        titleStyle: { fontWeight: "bold" },
       });
       return;
     }
@@ -71,29 +77,48 @@ export default function Login({ route, navigation }: Props) {
 
       if (res.ok) {
         console.log("✅ Login exitoso:", data);
-        Toast.show({
+        showMessage({
+          message: "Bienvenido de nuevo",
+          description: "✅ Has iniciado sesión correctamente 🚀",
           type: "success",
-          text1: "Bienvenido de nuevo",
-          text2: "✅ Has iniciado sesión correctamente 🚀",
-          position: "bottom",
+          icon: "success",
+          backgroundColor: "#4BAE4F",
+          color: "#fff",
+          duration: 3000,
+          floating: true,
+          style: { borderRadius: 10, marginHorizontal: 16, padding: 10, marginTop: 40 },
+          titleStyle: { fontWeight: "bold" },
         });
         navigation.replace("Home");
       } else {
         console.log("❌ Error en login:", data);
-        Toast.show({
-          type: "error",
-          text1: "Error en login",
-          text2: data.message || "❌ No se pudo iniciar sesión",
-          position: "bottom",
+        showMessage({
+          message: "Error en login",
+          description: data.message || "❌ No se pudo iniciar sesión",
+          type: "danger",
+          icon: "danger",
+          backgroundColor: "#FF6B6B",
+          color: "#fff",
+          duration: 3000,
+          floating: true,
+          style: { borderRadius: 10, marginHorizontal: 16, padding: 10 },
+          titleStyle: { fontWeight: "bold" },
         });
       }
     } catch (error: any) {
       console.error("⚠️ Error en login:", error);
-      Toast.show({
-        type: "error",
-        text1: "Error inesperado",
-        text2: error.message || "⚠️ Ocurrió un problema al iniciar sesión.",
-        position: "bottom",
+      showMessage({
+        message: "Error inesperado",
+        description:
+          error.message || "⚠️ Ocurrió un problema al iniciar sesión.",
+        type: "danger",
+        icon: "danger",
+        backgroundColor: "#FF6B6B",
+        color: "#fff",
+        duration: 3000,
+        floating: true,
+        style: { borderRadius: 10, marginHorizontal: 16, padding: 10 },
+        titleStyle: { fontWeight: "bold" },
       });
     } finally {
       setIsLoading(false);

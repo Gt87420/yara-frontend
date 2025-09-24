@@ -31,6 +31,15 @@ export default function BottomNavBar() {
         <Text style={styles.navText}>Cultivos</Text>
       </TouchableOpacity>
 
+       {/* 📦 Insumos */
+      <TouchableOpacity
+        style={styles.navItem}
+        onPress={() => navigation.navigate("Insumos")}
+      >
+        <Ionicons name="cube-outline" size={24} color="#1E5631" />
+        <Text style={styles.navText}>Insumos</Text>
+      </TouchableOpacity>}
+
       {/* 📌 Parcelas */}
       <TouchableOpacity
         style={styles.navItem}
@@ -40,6 +49,7 @@ export default function BottomNavBar() {
         <Text style={styles.navText}>Parcelas</Text>
       </TouchableOpacity>
 
+    
       {/* 🚪 Cerrar sesión */}
       <TouchableOpacity
         style={styles.navItem}

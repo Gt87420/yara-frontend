@@ -14,6 +14,8 @@ import { CultivoService } from "../../api/cultivoService";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BottomNavBar from "../../components/BottomNavBar";
+import { Ionicons } from "@expo/vector-icons";
+
 
 type Cultivo = {
   _id: string;
@@ -87,7 +89,7 @@ export default function DetallesCultivoScreen() {
           style={styles.backButton}
           onPress={() => navigation.goBack()}
         >
-          <Text style={styles.backButtonText}>←</Text>
+           <Ionicons name="arrow-back" size={20} color="#FFFFFF" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Detalles del Cultivo</Text>
         <TouchableOpacity

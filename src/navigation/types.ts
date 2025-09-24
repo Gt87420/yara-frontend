@@ -55,4 +55,8 @@ export type RootStackParamList = {
         onGoBack?: (cultivoActualizado: any) => void; // <-- agregar aquí
     };
     DetallesCultivo: { id: string };
+    Insumos: undefined;
+    InsumoDetail: { insumo: any };
+    InsumoCreate: undefined;
+    InsumoEdit: { id: string };
 }
