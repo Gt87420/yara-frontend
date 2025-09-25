@@ -105,7 +105,6 @@ const InsumoCreate = () => {
         precioUnitario: Number(precioUnitario),
         fechaIngreso,
         fechaVencimiento,
-        cantidadUsada: Number(cantidadUsada) || 0,
       });
 
       if (imagen && newInsumo?._id) {
@@ -154,7 +153,6 @@ const InsumoCreate = () => {
       setPrecioUnitario("");
       setFechaIngreso("");
       setFechaVencimiento("");
-      setCantidadUsada("");
       setImagen("");
       setPreview("");
 
@@ -256,17 +254,6 @@ const InsumoCreate = () => {
             />
           </View>
 
-          <View style={styles.inputGroup}>
-            <Text style={styles.inputLabel}>Cantidad Usada</Text>
-            <TextInput
-              style={styles.input}
-              value={cantidadUsada}
-              onChangeText={setCantidadUsada}
-              keyboardType="numeric"
-              placeholder="0"
-              placeholderTextColor="#A7C97B"
-            />
-          </View>
         </View>
 
         {/* Fechas */}

@@ -55,8 +55,8 @@ export default function BottomNavBar() {
         style={styles.navItem}
         onPress={() => navigation.navigate("Login", { google: false })}
       >
-        <Ionicons name="log-out-outline" size={24} color="#dc2626" />
-        <Text style={styles.navText}>Salir</Text>
+       <Ionicons name="person-circle-outline" size={24} color="#2563eb" />
+        <Text style={styles.navText}>Perfil</Text>
       </TouchableOpacity>
     </View>
   );

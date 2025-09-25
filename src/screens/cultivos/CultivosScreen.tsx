@@ -13,10 +13,11 @@ import { CultivoService } from "../../api/cultivoService";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "../../navigation/types";
-import { Feather, MaterialIcons, Ionicons } from "../../components/Ionicons";
+import { Feather, MaterialIcons } from "../../components/Ionicons";
 import { auth } from "../../firebase";
 import ConfirmModal from "../../components/ConfirmModal"; // Asegúrate de crear este componente
 import BottomNavBar from "../../components/BottomNavBar";
+import { Ionicons } from '@expo/vector-icons';
 
 
 type CultivosNav = NativeStackNavigationProp<RootStackParamList, "Cultivos">;
@@ -77,7 +78,7 @@ export default function CultivosScreen() {
     if (!selectedCultivo) return;
     try {
       await CultivoService.eliminar(selectedCultivo._id);
-      setCultivos(prev => prev.filter(c => c._id !== selectedCultivo._id));
+      setCultivos((prev) => prev.filter((c) => c._id !== selectedCultivo._id));
     } catch (err) {
       console.error(err);
     } finally {
@@ -88,26 +89,41 @@ export default function CultivosScreen() {
 
   const getStageColor = (stage: string) => {
     switch (stage?.toLowerCase()) {
-      case "siembra": return "#4BAE4F";
-      case "germinación": return "#A7C97B";
-      case "desarrollo vegetativo": return "#1E5631";
-      case "crecimiento": return "#8FBC8F";
-      case "floración": return "#FFB6C1";
-      case "fructificación": return "#FF8C00";
-      case "maduración": return "#DAA520";
-      case "cosecha": return "#9F7928";
-      case "postcosecha": return "#A9A9A9";
-      default: return "#666";
+      case "siembra":
+        return "#4BAE4F";
+      case "germinación":
+        return "#A7C97B";
+      case "desarrollo vegetativo":
+        return "#1E5631";
+      case "crecimiento":
+        return "#8FBC8F";
+      case "floración":
+        return "#FFB6C1";
+      case "fructificación":
+        return "#FF8C00";
+      case "maduración":
+        return "#DAA520";
+      case "cosecha":
+        return "#9F7928";
+      case "postcosecha":
+        return "#A9A9A9";
+      default:
+        return "#666";
     }
   };
 
   const getStageIcon = (stage: string) => {
     switch (stage?.toLowerCase()) {
-      case "siembra": return "seedling";
-      case "crecimiento": return "trending-up";
-      case "floración": return "flower";
-      case "cosecha": return "package";
-      default: return "help-circle";
+      case "siembra":
+        return "seedling";
+      case "crecimiento":
+        return "trending-up";
+      case "floración":
+        return "flower";
+      case "cosecha":
+        return "package";
+      default:
+        return "help-circle";
     }
   };
 
@@ -144,21 +160,29 @@ export default function CultivosScreen() {
 
   const renderCultivoCard = ({ item }: { item: any }) => (
     <TouchableOpacity
-      style={[
-        styles.cropCard,
-        item.activo === false && { opacity: 0.5 },
-      ]}
+      style={[styles.cropCard, item.activo === false && { opacity: 0.5 }]}
       onPress={() => navigation.navigate("DetallesCultivo", { id: item._id })}
       activeOpacity={0.7}
     >
       <View style={styles.cardHeader}>
         <View style={styles.cropInfo}>
-          <Text style={styles.cropName}>{String(item.cultivo ?? "Sin nombre")}</Text>
-          <Text style={styles.cropPlot}>Parcela: {getParcelaNombre(item.parcelaId)}</Text>
+          <Text style={styles.cropName}>
+            {String(item.cultivo ?? "Sin nombre")}
+          </Text>
+          <Text style={styles.cropPlot}>
+            Parcela: {getParcelaNombre(item.parcelaId)}
+          </Text>
         </View>
-        <View style={[styles.stageBadge, { backgroundColor: getStageColor(item.etapa) }]}>
+        <View
+          style={[
+            styles.stageBadge,
+            { backgroundColor: getStageColor(item.etapa) },
+          ]}
+        >
           <Feather name={getStageIcon(item.etapa)} size={12} color="#FFFFFF" />
-          <Text style={styles.stageText}>{String(item.etapa ?? "Desconocida")}</Text>
+          <Text style={styles.stageText}>
+            {String(item.etapa ?? "Desconocida")}
+          </Text>
         </View>
       </View>
 
@@ -168,14 +192,18 @@ export default function CultivosScreen() {
             <Ionicons name="calendar-outline" size={16} color="#666" />
             <Text style={styles.infoLabel}>Inicio</Text>
             <Text style={styles.infoValue}>
-              {item.fechaInicio ? new Date(item.fechaInicio).toLocaleDateString() : "N/A"}
+              {item.fechaInicio
+                ? new Date(item.fechaInicio).toLocaleDateString()
+                : "N/A"}
             </Text>
           </View>
           <View style={styles.infoItem}>
             <MaterialIcons name="trending-up" size={16} color="#666" />
             <Text style={styles.infoLabel}>Rendimiento</Text>
             <Text style={styles.infoValue}>
-              {item.rendimientoEsperado != null ? String(item.rendimientoEsperado) : "N/A"}
+              {item.rendimientoEsperado != null
+                ? String(item.rendimientoEsperado)
+                : "N/A"}
             </Text>
           </View>
         </View>
@@ -199,7 +227,7 @@ export default function CultivosScreen() {
           style={[styles.actionButton, styles.deleteButton]}
           onPress={() => handleDeletePress(item)}
         >
-          <Feather name="trash-2" size={16} color="#FF4444" />
+          <Ionicons name="trash-outline" size={16} color="#FF4444" />
           <Text style={styles.deleteButtonText}>Eliminar</Text>
         </TouchableOpacity>
       </View>
@@ -214,7 +242,10 @@ export default function CultivosScreen() {
           <Text style={styles.title}>Mis Cultivos</Text>
           <Text style={styles.subtitle}>Gestiona y monitorea tus cultivos</Text>
         </View>
-        <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate("CrearCultivo")}>
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => navigation.navigate("CrearCultivo")}
+        >
           <Feather name="plus" size={20} color="#FFFFFF" />
           <Text style={styles.addButtonText}>Nuevo</Text>
         </TouchableOpacity>
@@ -233,15 +264,29 @@ export default function CultivosScreen() {
           />
         </View>
 
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.stageFilters}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.stageFilters}
+        >
           {stages.map((stage) => (
             <TouchableOpacity
               key={stage}
-              style={[styles.stageFilter, filterStage === stage && styles.activeStageFilter]}
+              style={[
+                styles.stageFilter,
+                filterStage === stage && styles.activeStageFilter,
+              ]}
               onPress={() => setFilterStage(stage)}
             >
-              <Text style={[styles.stageFilterText, filterStage === stage && styles.activeStageFilterText]}>
-                {stage === "all" ? "Todos" : stage.charAt(0).toUpperCase() + stage.slice(1)}
+              <Text
+                style={[
+                  styles.stageFilterText,
+                  filterStage === stage && styles.activeStageFilterText,
+                ]}
+              >
+                {stage === "all"
+                  ? "Todos"
+                  : stage.charAt(0).toUpperCase() + stage.slice(1)}
               </Text>
             </TouchableOpacity>
           ))}
@@ -249,7 +294,10 @@ export default function CultivosScreen() {
       </View>
 
       {/* Cultivos List */}
-      <ScrollView contentContainerStyle={styles.listContainer} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        contentContainerStyle={styles.listContainer}
+        showsVerticalScrollIndicator={false}
+      >
         {/* Activos */}
         {activos.length > 0 && (
           <>
@@ -292,8 +340,8 @@ export default function CultivosScreen() {
         onConfirm={handleConfirmDelete}
         onCancel={() => setModalVisible(false)}
       />
-        {/* Barra de navegación */}
-        <BottomNavBar />
+      {/* Barra de navegación */}
+      <BottomNavBar />
     </View>
   );
 }
