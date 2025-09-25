@@ -15,8 +15,13 @@
     - Selectores y dropdowns con `react-native-element-dropdown` y `react-native-dropdown-picker`
     - Íconos con `@expo/vector-icons` y `lucide-react-native`
 
-## Tecnologías utilizadas
+## ⚙️ Requerimientos técnicos
+- Node.js: `v18.0.0` o superior  
+- npm: `v8.0.0` o superior  
+- Expo CLI  
+- Dispositivo físico o emulador Android/iOS  
 
+## Tecnologías utilizadas
     - **React Native (Expo 54)**
     - **Firebase v12**
     - **React Navigation v7** (navegación stack & tabs)
