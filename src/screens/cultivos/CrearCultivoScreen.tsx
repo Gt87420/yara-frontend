@@ -170,6 +170,17 @@ export default function CrearCultivoScreen() {
 
   const handleGuardar = async () => {
     try {
+      const user = auth.currentUser; // 🔹 Aquí defines 'user'
+      if (!user) {
+        showMessage({
+          message: "Error",
+          description: "No se encontró el usuario autenticado",
+          type: "danger",
+          icon: "danger",
+        });
+        return;
+      }
+
       if (
         !parcelaId ||
         !cultivo ||
@@ -190,6 +201,7 @@ export default function CrearCultivoScreen() {
       }
 
       const nuevo: any = {
+        usuarioUid: user.uid, // 🔹 Ahora 'user' está definido
         parcelaId,
         cultivo,
         etapa,
@@ -200,8 +212,6 @@ export default function CrearCultivoScreen() {
       const cultivoCreado = await CultivoService.crear(nuevo);
 
       if (imagen && cultivoCreado?._id) {
-        const user = auth.currentUser;
-        if (!user) return;
         const token = await user.getIdToken();
 
         const formData = new FormData();

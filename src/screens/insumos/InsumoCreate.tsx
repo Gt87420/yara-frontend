@@ -29,7 +29,6 @@ const InsumoCreate = () => {
   const [precioUnitario, setPrecioUnitario] = useState("");
   const [fechaIngreso, setFechaIngreso] = useState("");
   const [fechaVencimiento, setFechaVencimiento] = useState("");
-  const [cantidadUsada, setCantidadUsada] = useState("");
   const [imagen, setImagen] = useState<string>("");
   const [preview, setPreview] = useState<string>("");
 
@@ -83,33 +82,42 @@ const InsumoCreate = () => {
   };
 
   const handleCreate = async () => {
-    if (
-      !nombre ||
-      !cantidad ||
-      !unidad ||
-      !precioUnitario ||
-      !fechaIngreso ||
-      !fechaVencimiento
-    ) {
+    if (!nombre || !cantidad || !unidad || !precioUnitario || !fechaIngreso) {
       Alert.alert("Error", "Por favor completa todos los campos obligatorios");
       return;
     }
 
-    setLoading(true); // 🔹 Inicia animación
+    setLoading(true);
 
     try {
+      const user = auth.currentUser;
+      if (!user) {
+        Alert.alert("Error", "No se encontró el usuario autenticado");
+        setLoading(false);
+        return;
+      }
+
+      // 🔹 Convertir strings a fechas válidas
+      const fechaIngresoDate = new Date(fechaIngreso);
+      const fechaVencimientoDate = fechaVencimiento
+        ? new Date(fechaVencimiento)
+        : null;
+
+      // 🔹 Crear el insumo con los tipos correctos
       const newInsumo = await InsumoService.crear({
+        usuarioUid: user.uid, // ✅ string
         nombre,
         cantidad: Number(cantidad),
         unidad,
         precioUnitario: Number(precioUnitario),
-        fechaIngreso,
-        fechaVencimiento,
+        fechaIngreso: new Date(fechaIngresoDate), // ✅ objeto Date
+        fechaVencimiento: fechaVencimientoDate
+          ? new Date(fechaVencimientoDate)
+          : undefined, // opcional
       });
 
+      // 🔹 Subir imagen si existe
       if (imagen && newInsumo?._id) {
-        const user = auth.currentUser;
-        if (!user) return;
         const token = await user.getIdToken();
 
         const formData = new FormData();
@@ -129,7 +137,6 @@ const InsumoCreate = () => {
         );
       }
 
-      // showMessage en lugar de Alert
       showMessage({
         message: "Éxito",
         description: "Insumo creado correctamente",
@@ -137,16 +144,9 @@ const InsumoCreate = () => {
         icon: "success",
         duration: 2000,
         position: "top",
-        floating: true,
-        style: {
-          borderRadius: 16,
-          marginTop: 40,
-          marginHorizontal: 16,
-          padding: 10,
-        },
       });
 
-      // Limpiar campos
+      // 🔹 Limpiar campos
       setNombre("");
       setCantidad("");
       setUnidad("");
@@ -158,7 +158,7 @@ const InsumoCreate = () => {
 
       navigation.goBack();
     } catch (error) {
-      console.error(error);
+      console.error("❌ Error al crear insumo:", error);
       showMessage({
         message: "Error",
         description: "No se pudo crear el insumo",
@@ -166,7 +166,7 @@ const InsumoCreate = () => {
         icon: "danger",
       });
     } finally {
-      setLoading(false); // 🔹 Detener animación
+      setLoading(false);
     }
   };
 
@@ -253,7 +253,6 @@ const InsumoCreate = () => {
               placeholderTextColor="#A7C97B"
             />
           </View>
-
         </View>
 
         {/* Fechas */}
