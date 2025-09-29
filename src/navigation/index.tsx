@@ -78,8 +78,6 @@ export default function App() {
         <Stack.Screen name="ActividadCreate" component={ActividadCreate} />
         <Stack.Screen name="ActividadEdit" component={ActividadEdit} />
       </Stack.Navigator>
-
-      {/* 👇 Esto debe estar al final del contenedor */}
       <Toast />
     </NavigationContainer>
   );
