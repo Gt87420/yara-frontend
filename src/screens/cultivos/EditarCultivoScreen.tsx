@@ -17,6 +17,7 @@ import { useRoute, useNavigation } from "@react-navigation/native";
 import { Switch, Image } from "react-native";
 import BottomNavBar from "../../components/BottomNavBar";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { showMessage } from "react-native-flash-message";
 
 export default function EditarCultivoScreen() {
   const route = useRoute<any>();
@@ -57,7 +58,10 @@ export default function EditarCultivoScreen() {
 
   const handleActualizar = async () => {
     if (!cultivo.trim()) {
-      Alert.alert("Error", "El nombre del cultivo es obligatorio");
+      showMessage({
+        message: "El nombre del cultivo es obligatorio",
+        type: "danger",
+      });
       return;
     }
 
@@ -78,20 +82,27 @@ export default function EditarCultivoScreen() {
         actualizado
       );
 
-      Alert.alert("¡Éxito!", "Cultivo actualizado correctamente", [
-        {
-          text: "OK",
-          onPress: () => {
-            if (onGoBack && typeof onGoBack === "function") {
-              onGoBack(cultivoActualizado);
-            }
-            navigation.goBack();
-          },
-        },
-      ]);
+      showMessage({
+        message: "✅ Cultivo actualizado correctamente",
+        type: "success",
+        icon: "success",
+        duration: 2000,
+        position: "top",
+        floating: true,
+        style: { marginTop: 60 },
+      });
+
+      if (onGoBack && typeof onGoBack === "function") {
+        onGoBack(cultivoActualizado);
+      }
+      navigation.goBack();
     } catch (err: any) {
       console.error("❌ Error actualizando cultivo:", err);
-      Alert.alert("Error", err.message || "No se pudo actualizar el cultivo");
+      showMessage({
+        message: err.message || "No se pudo actualizar el cultivo",
+        type: "danger",
+        duration: 3000,
+      });
     } finally {
       setLoading(false);
     }

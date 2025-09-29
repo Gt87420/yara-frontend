@@ -59,4 +59,8 @@ export type RootStackParamList = {
     InsumoDetail: { insumo: any };
     InsumoCreate: undefined;
     InsumoEdit: { id: string };
+    ActividadesList: undefined;
+    ActividadDetail: { id: string };
+    ActividadCreate: undefined;
+    ActividadEdit: { id: string };
 }

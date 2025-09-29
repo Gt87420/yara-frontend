@@ -19,7 +19,6 @@ import { auth } from "../../firebase";
 import { Ionicons } from "@expo/vector-icons";
 import { showMessage } from "react-native-flash-message";
 
-
 const formatDate = (isoString: string) => {
   if (!isoString) return "";
   const date = new Date(isoString);
@@ -73,7 +72,20 @@ const InsumoEdit = () => {
 
     setLoading(true);
     try {
-      await InsumoService.editar(id, insumo);
+      // Crear un objeto solo con los campos editables
+      const dataToUpdate = {
+        nombre: insumo.nombre,
+        cantidad: insumo.cantidad,
+        unidad: insumo.unidad,
+        precioUnitario: insumo.precioUnitario,
+        fechaIngreso: insumo.fechaIngreso,
+        fechaVencimiento: insumo.fechaVencimiento,
+        // si hay más campos editables, añadirlos aquí
+      };
+
+      console.log("Datos que se envían:", dataToUpdate);
+
+      await InsumoService.editar(id, dataToUpdate);
 
       if (imagen) {
         const user = auth.currentUser;
@@ -99,12 +111,17 @@ const InsumoEdit = () => {
         description: "Insumo actualizado correctamente",
         type: "success",
         duration: 2000,
-        style: { borderRadius: 16, marginTop: 40, marginHorizontal: 16, padding: 10  },
+        style: {
+          borderRadius: 16,
+          marginTop: 40,
+          marginHorizontal: 16,
+          padding: 10,
+        },
       });
 
       navigation.goBack();
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      console.error("Error al actualizar insumo:", error.message || error);
       showMessage({
         message: "Error",
         description: "No se pudo actualizar el insumo",
@@ -321,28 +338,6 @@ const InsumoEdit = () => {
                     setInsumo({ ...insumo, fechaVencimiento: t })
                   }
                   placeholder="DD/MM/YYYY"
-                  placeholderTextColor="#A7C97B"
-                />
-              </View>
-            </View>
-
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>Cantidad Usada</Text>
-              <View style={styles.inputWrapper}>
-                <Ionicons
-                  name="trending-down-outline"
-                  size={20}
-                  color="#4BAE4F"
-                  style={styles.inputIcon}
-                />
-                <TextInput
-                  style={styles.input}
-                  value={String(insumo.cantidadUsada)}
-                  onChangeText={(t) =>
-                    setInsumo({ ...insumo, cantidadUsada: Number(t) })
-                  }
-                  keyboardType="numeric"
-                  placeholder="0"
                   placeholderTextColor="#A7C97B"
                 />
               </View>

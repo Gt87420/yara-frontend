@@ -9,7 +9,7 @@ import HomeScreen from "../screens/home/HomeScreen";
 import ParcelasScreen from "../screens/parcelas/ParcelasScreen";
 import DetallesParcelaScreen from "../screens/parcelas/DetallesParcelaScreen";
 import CrearParcelaScreen from "../screens/parcelas/CrearParcelaScreen";
-import ClimaScreen from "../screens/parcelas/ClimaScreen" 
+import ClimaScreen from "../screens/parcelas/ClimaScreen";
 import TestIcon from "../screens/start/TestIcon";
 import { RootStackParamList } from "./types";
 import Toast from "react-native-toast-message"; // 👈 Importa Toast
@@ -21,7 +21,10 @@ import InsumosList from "../screens/insumos/InsumosList";
 import InsumoDetail from "../screens/insumos/InsumoDetail";
 import InsumoCreate from "../screens/insumos/InsumoCreate";
 import InsumoEdit from "../screens/insumos/InsumoEdit";
-
+import ActividadesList from "../screens/actividades/ActividadesList";
+import ActividadDetail from "../screens/actividades/ActividadDetail";
+import ActividadCreate from "../screens/actividades/ActividadCreate";
+import ActividadEdit from "../screens/actividades/ActividadEdit";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -45,20 +48,35 @@ export default function App() {
           component={GoogleLoginScreen}
           options={{ title: "Login con Google" }}
         />
-        <Stack.Screen name="Home" component={HomeScreen} options={{ title: "Inicio" }} />
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: "Inicio" }}
+        />
         <Stack.Screen name="Parcelas" component={ParcelasScreen} />
         <Stack.Screen name="CrearParcela" component={CrearParcelaScreen} />
-        <Stack.Screen name="DetallesParcelaScreen" component={DetallesParcelaScreen} />
+        <Stack.Screen
+          name="DetallesParcelaScreen"
+          component={DetallesParcelaScreen}
+        />
         <Stack.Screen name="Clima" component={ClimaScreen} />
 
         <Stack.Screen name="Cultivos" component={CultivosScreen} />
         <Stack.Screen name="CrearCultivo" component={CrearCultivoScreen} />
         <Stack.Screen name="EditarCultivo" component={EditarCultivoScreen} />
-        <Stack.Screen name="DetallesCultivo" component={DetallesCultivoScreen} />
+        <Stack.Screen
+          name="DetallesCultivo"
+          component={DetallesCultivoScreen}
+        />
         <Stack.Screen name="Insumos" component={InsumosList} />
         <Stack.Screen name="InsumoDetail" component={InsumoDetail} />
         <Stack.Screen name="InsumoCreate" component={InsumoCreate} />
         <Stack.Screen name="InsumoEdit" component={InsumoEdit} />
+
+        <Stack.Screen name="ActividadesList" component={ActividadesList} />
+        <Stack.Screen name="ActividadDetail" component={ActividadDetail} />
+        <Stack.Screen name="ActividadCreate" component={ActividadCreate} />
+        <Stack.Screen name="ActividadEdit" component={ActividadEdit} />
       </Stack.Navigator>
 
       {/* 👇 Esto debe estar al final del contenedor */}
